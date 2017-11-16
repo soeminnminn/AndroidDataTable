@@ -27,7 +27,11 @@ public final class DataResolver {
         if (projection == null) {
             projection = mTable.getColumnNames();
         }
-        return mContentResolver.query(mTable.getUri(), projection, selection, selectionArgs, sortOrder);
+        Cursor cursor = mContentResolver.query(mTable.getUri(), projection, selection, selectionArgs, sortOrder);
+        if (cursor != null) {
+            cursor.setNotificationUri(mContentResolver, mTable.getUri());
+        }
+        return cursor;
     }
 
     /**
